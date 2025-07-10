@@ -106,6 +106,9 @@ class FastPurgeClient(object):
     MAX_RETRIES = int(os.environ.get("FAST_PURGE_MAX_RETRIES", "10"))
 
     RETRY_BACKOFF = float(os.environ.get("FAST_PURGE_RETRY_BACKOFF", "0.15"))
+    RETRY_BACKOFF_MAX = float(os.environ.get("FAST_PURGE_RETRY_BACKOFF_MAX", "150"))
+    RETRY_BACKOFF_JITTER = float(os.environ.get("FAST_PURGE_RETRY_JITTER", "2"))
+
     # Default purge type.
     # Akamai recommend "invalidate", so why is "delete" our default?
     # Here's what Akamai docs have to say:
@@ -235,6 +238,8 @@ class FastPurgeClient(object):
             retries = LoggingRetry(
                 total=self.MAX_RETRIES,
                 backoff_factor=self.RETRY_BACKOFF,
+                backoff_max=self.RETRY_BACKOFF_MAX,
+                backoff_jitter=self.RETRY_BACKOFF_JITTER,
                 # We strictly require 201 here since that's how the server
                 # tells us we queued something async, as expected
                 status_forcelist=[status.value for status in HTTPStatus
