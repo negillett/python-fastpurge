@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - n/a
 
+# 1.0.6 - 2025-07-22
+
+### Changed
+
+- The fastpurge client's `backoff_max` and `backoff_jitter` parameters are now
+  configurable via the `FAST_PURGE_RETRY_BACKOFF_MAX` and `FAST_PURGE_RETRY_JITTER`
+  environment variables.
+
 # 1.0.5 - 2024-03-22
 
 ### Changed
